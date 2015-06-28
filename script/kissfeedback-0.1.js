@@ -1,6 +1,6 @@
 (function() {
   onReady(function() {
-    console.log(getElementsByClassName(document, 'kissfeedback'));
+    console.log(getElementsByClassName('kissfeedback'));
   });
 
   /* $.ready x-browser substitute. see http://stackoverflow.com/a/30319853 */
@@ -11,15 +11,12 @@
   }
 
   /* class selector. falling back to dustin diaz method on older browsers */
-  function getElementsByClassName(node, classname) {
-    if (node == null) {
-      node = document;
-    }
-    if (node.getElementsByClassName && false) {
-      return node.getElementsByClassName(classname);
+  function getElementsByClassName(classname) {
+    if (document.getElementsByClassName) {
+      return document.getElementsByClassName(classname);
     }
     var results = [];
-    var candidates = node.getElementsByTagName("*");
+    var candidates = document.getElementsByTagName("*");
     var pattern = new RegExp("(^|\\s)" + classname + "(\\s|$)");
     for (var i in candidates) {
       if (pattern.test(candidates[i].className) ) {

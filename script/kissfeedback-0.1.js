@@ -1,7 +1,19 @@
 (function() {
   onReady(function() {
-    console.log(getElementsByClassName('kissfeedback'));
+    var feedbackButtons = getElementsByClassName('kissfeedback');
+    for (var i = 0; i < feedbackButtons.length; i++) {
+      if (feedbackButtons[i].addEventListener) {
+        feedbackButtons[i].addEventListener('click', openFeedbackForm);
+      } else {
+        feedbackButtons[i].attachEvent('onclick', openFeedbackForm);
+      }
+    }
   });
+
+  /* onClickListener. Open up feedback form for user. */
+  function openFeedbackForm(event) {
+    console.log('open!', event);
+  }
 
   /* $.ready x-browser substitute. see http://stackoverflow.com/a/30319853 */
   function onReady(callback) {
@@ -15,14 +27,14 @@
     if (document.getElementsByClassName) {
       return document.getElementsByClassName(classname);
     }
-    var results = [];
+    var matches = [];
     var candidates = document.getElementsByTagName("*");
     var pattern = new RegExp("(^|\\s)" + classname + "(\\s|$)");
-    for (var i in candidates) {
+    for (var i = 0; i < candidates.length; i++) {
       if (pattern.test(candidates[i].className) ) {
-        results.push(candidates[i]);
+        matches.push(candidates[i]);
       }
     }
-    return results;
+    return matches;
   }
 })();

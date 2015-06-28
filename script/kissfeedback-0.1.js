@@ -1,6 +1,11 @@
 (function() {
   onReady(function() {
     var feedbackButtons = getElementsByClassName('kissfeedback');
+    var emails = window['kf'].e || [];
+    if (feedbackButtons.length < 1 || emails.length < 1) {
+      return;
+    }
+
     for (var i = 0; i < feedbackButtons.length; i++) {
       if (feedbackButtons[i].addEventListener) {
         feedbackButtons[i].addEventListener('click', openFeedbackForm);
@@ -8,6 +13,8 @@
         feedbackButtons[i].attachEvent('onclick', openFeedbackForm);
       }
     }
+
+
   });
 
   /* onClickListener. Open up feedback form for user. */

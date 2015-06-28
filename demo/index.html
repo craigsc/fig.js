@@ -1,7 +1,13 @@
 <html>
   <head>
     <title>kissfeedback demo</title>
-    <script src="../script/kissfeedback-0.1.js" type="text/javascript"></script>
+    <script>
+      (function(y,o,d,a,w,g){y[a]=y[a]||function(){(y[a].e=y[a].e||[]).push(arguments)};
+       w=o.createElement(d);w.async=1;w.src='../script/kissfeedback-0.1.js';
+       g=o.getElementsByTagName(d)[0];g.parentNode.insertBefore(w,g)
+       })(window,document,'script','kf');
+      kf('a@b.com', 'c@d.com');
+    </script>
   </head>
   <body style="max-width:800px">
     <h1>kissfeedback demo</h1>

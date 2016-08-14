@@ -70,16 +70,43 @@
       "background-color:#fefefe;margin:15% auto;border:1px solid #888;width:30%;min-width:300px;" +
       "font-family:Helvetica,Arial,sans-serif;";
 
+    var form = document.createElement('form');
+    form.style =
+      "margin: 0;outline: none;box-shadow: 0 0 20px rgba(0,0,0,.3);" +
+      "font: 13px/1.55 'Open Sans', Helvetica, Arial, sans-serif;color: #666;";
+    modalContent.appendChild(form);
+
     var header = document.createElement("header");
     header.innerHTML = "How can we help?";
     header.style =
       "padding: 20px 30px;border-bottom: 1px solid rgba(0,0,0,.1);background: rgba(248,248,248,.9);" +
       "font-size: 25px;font-weight: 300;color: #232323;";
-    modalContent.appendChild(header);
+    form.appendChild(header);
 
-    var form = document.createElement("p");
-    form.innerHTML = "Test Content. Helloooo.";
-    modalContent.appendChild(form);
+    var fieldset = document.createElement("fieldset");
+    fieldset.style =
+      "display: block;padding: 25px 30px 5px;border: none;background: #f2f2f2);";
+    form.appendChild(fieldset);
+
+    var email = document.createElement("input");
+    email.type = "email";
+    email.placeholder = "Your email";
+    email.style =
+      "width:100%;height:39px;padding:8px 10px;outline:none;border-width:2px;background:#fff;" +
+      "color:#404040;font:15px/19px 'Open Sans', Helvetica, Arial, sans-serif;";
+    var emailSection = createSection();
+    emailSection.appendChild(email);
+    fieldset.appendChild(emailSection);
+
+    var textarea = document.createElement("textarea");
+    textarea.rows = "4";
+    textarea.placeholder = "Message";
+    textarea.style =
+      "border-color:#e5e5e5;height:auto;resize:none;outline:none;width:100%;padding:8px 10px;" +
+      "border-width:2px;background:#fff;color:#404040;font:15px/19px 'Open Sans', Helvetica, Arial, sans-serif;";
+    var taSection = createSection();
+    taSection.appendChild(textarea);
+    fieldset.appendChild(taSection);
 
     var footer = document.createElement("footer");
     footer.style =
@@ -95,10 +122,11 @@
        "text-decoration: none;color: #fff;cursor: pointer;" +
        "background-color:" + getPrimaryColor() + ";";
     footer.appendChild(button);
-    modalContent.appendChild(footer);
+    form.appendChild(footer);
 
     modal.appendChild(modalContent);
     document.body.appendChild(modal);
+    textarea.focus();
     return modal;
   }
 
@@ -144,5 +172,11 @@
 
   function getPrimaryColor() {
     return getConfig().color || '#0064cd';
+  }
+
+  function createSection() {
+    var section = document.createElement("section");
+    section.style = "margin-bottom:20px;";
+    return section;
   }
 })();

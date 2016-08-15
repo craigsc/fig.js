@@ -9,7 +9,7 @@
   bottom: 0;
   color: #fff;
   cursor: pointer;
-  font-family: "Helvetica", "Arial", sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   font-weight: 700;
   height:48px;
   line-height: 48px;
@@ -23,4 +23,95 @@
   vertical-align: middle;
   width: 114px; 
   z-index: 9999;
+}
+
+#kfModal {
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  height: 100%;
+  left: 0;
+  overflow: auto; 
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99999;
+}
+
+#kfModalContent {
+  background-color: #fefefe;
+  border: 1px solid #888;
+  font-family: Helvetica, Arial, sans-serif;
+  margin: 5% auto;
+  min-width: 300px;
+  width: 30%;
+}
+
+#kfModalContent form {
+  box-shadow: 0 0 20px rgba(0, 0, 0, .3);
+  color: #666;
+  font: 13px/1.55 Helvetica, Arial, sans-serif;
+  margin: 0;
+  outline: none;
+}
+
+#kfModalContent header {
+  background: rgba(248, 248, 248, .9);
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  color: #232323;
+  font-size: 25px;
+  font-weight: 300;
+  padding: 20px 30px;
+}
+
+#kfModalContent fieldset {
+  background: #fefefe;
+  border: none;
+  display: block;
+  padding: 25px 30px 5px;
+}
+
+#kfModalContent section {
+  margin-bottom: 20px;
+}
+
+#kfModalContent .kfField {
+  background:#fff;
+  border-width: 2px;
+  color: #404040;
+  font: 15px/19px Helvetica, Arial, sans-serif;
+  outline: none;
+  padding: 8px 10px;
+  width: 100%;
+}
+
+#kfModalContent input {
+  height: 39px;
+}
+
+#kfModalContent textarea {
+  border-color: #efefef;
+  height: auto;
+  resize: none;
+}
+
+#kfModalContent footer {
+  background: rgba(248, 248, 248, .9);
+  border-top: 1px solid rgba(0, 0, 0, .1);
+  display: block;
+  overflow:hidden;
+  padding: 15px 30px 25px;
+}
+
+#kfModalContent footer button {
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  float: right;
+  font: 300 15px/39px Helvetica, Arial, sans-serif;
+  height: 39px;
+  margin: 10px 0 0 20px;
+  outline: none;
+  overflow: hidden;
+  padding: 0 25px;
+  text-decoration: none;
 }

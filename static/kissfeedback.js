@@ -51,9 +51,7 @@
   function configureModal() {
     var modal = document.createElement("div");
     modal.id = 'kfModal';
-    modal.setAttribute('style',
-      "display:none;position:fixed;z-index:99999;left:0;top:0;width:100%;height:100%;" +
-      "overflow:auto;background-color:rgba(0,0,0,0.4);");
+    document.body.appendChild(modal);
     window.onclick = function(event) {
       if (event.target == modal) {
         modal.style.display = "none";
@@ -62,68 +60,44 @@
 
     var modalContent = document.createElement("div");
     modalContent.id = "kfModalContent";
-    modalContent.setAttribute('style',
-      "background-color:#fefefe;margin:15% auto;border:1px solid #888;width:30%;min-width:300px;" +
-      "font-family:Helvetica,Arial,sans-serif;");
+    modal.appendChild(modalContent);
 
     var form = document.createElement('form');
-    form.setAttribute('style',
-      "margin: 0;outline: none;box-shadow: 0 0 20px rgba(0,0,0,.3);" +
-      "font: 13px/1.55 'Open Sans', Helvetica, Arial, sans-serif;color: #666;");
     modalContent.appendChild(form);
 
     var header = document.createElement("header");
     header.innerHTML = "How can we help?";
-    header.setAttribute('style',
-      "padding: 20px 30px;border-bottom: 1px solid rgba(0,0,0,.1);background: rgba(248,248,248,.9);" +
-      "font-size: 25px;font-weight: 300;color: #232323;");
     form.appendChild(header);
 
     var fieldset = document.createElement("fieldset");
-    fieldset.setAttribute('style',
-      "display: block;padding: 25px 30px 5px;border: none;background: #f2f2f2);");
     form.appendChild(fieldset);
 
     var email = document.createElement("input");
     email.type = "email";
-    email.placeholder = "Your email";
-    email.setAttribute('style',
-      "width:100%;height:39px;padding:8px 10px;outline:none;border-width:2px;background:#fff;" +
-      "color:#404040;font:15px/19px 'Open Sans', Helvetica, Arial, sans-serif;");
-    var emailSection = createSection();
+    email.placeholder = "Your Email";
+    email.className = 'kfField';
+    var emailSection = document.createElement("section");
     emailSection.appendChild(email);
     fieldset.appendChild(emailSection);
 
     var textarea = document.createElement("textarea");
     textarea.rows = "4";
     textarea.placeholder = "Message";
-    textarea.setAttribute('style',
-      "border-color:#e5e5e5;height:auto;resize:none;outline:none;width:100%;padding:8px 10px;" +
-      "border-width:2px;background:#fff;color:#404040;" +
-      "font:15px/19px 'Open Sans', Helvetica, Arial, sans-serif;");
-    var taSection = createSection();
+    textarea.className = 'kfField';
+    var taSection = document.createElement("section");
     taSection.appendChild(textarea);
     fieldset.appendChild(taSection);
 
     var footer = document.createElement("footer");
-    footer.setAttribute('style',
-      "display: block;padding: 15px 30px 25px;border-top: 1px solid rgba(0,0,0,.1);" +
-      "background: rgba(248,248,248,.9);overflow:hidden;");
+    form.appendChild(footer);
+
     var button = document.createElement("button");
     button.type = "submit";
     button.innerHTML = "Send";
     button.className = 'kfButton';
-    button.setAttribute('style',
-      "float:right;height:39px;overflow: hidden;margin: 10px 0 0 20px;padding: 0 25px;" +
-       "outline: none;border: 0;font: 300 15px/39px 'Open Sans', Helvetica, Arial, sans-serif;" +
-       "text-decoration: none;color: #fff;cursor: pointer;" +
-       "background-color:" + getPrimaryColor() + ";");
+    button.style.background = getPrimaryColor();
     footer.appendChild(button);
-    form.appendChild(footer);
 
-    modal.appendChild(modalContent);
-    document.body.appendChild(modal);
-    textarea.focus();
     return modal;
   }
 
@@ -169,12 +143,6 @@
 
   function getPrimaryColor() {
     return getConfig().color || '#0064cd';
-  }
-
-  function createSection() {
-    var section = document.createElement("section");
-    section.setAttribute('style', "margin-bottom:20px;");
-    return section;
   }
 
   function injectStylesheet() {

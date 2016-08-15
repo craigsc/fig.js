@@ -76,9 +76,9 @@
 
 #kfModalContent .kfField {
   background:#fff;
-  border-width: 1px;
-  border-style: solid;
   border-color: #a7a7a7;
+  border-style: solid;
+  border-width: 1px;
   color: #404040;
   font: 15px/19px Helvetica, Arial, sans-serif;
   outline: none;
@@ -115,4 +115,21 @@
   overflow: hidden;
   padding: 0 25px;
   text-decoration: none;
+}
+
+#kfLogo {
+  color: #ddd;
+  float: left;
+  font: 500 12px Helvetica, Arial, sans-serif;
+  letter-spacing: .02em;
+  margin: 35px 0 0 4px;
+  text-decoration: none;
+}
+
+#kfLogo:hover {
+  color: #999;
+}
+
+#kfCanary {
+  display: none;
 }

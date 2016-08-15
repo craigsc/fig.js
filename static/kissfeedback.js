@@ -1,36 +1,58 @@
 (function() {
   onReady(function() {
-    if (!getConfig().email) {
-      console.log('KissFeedback has no target email address configured! Could not initialize.');
+    var config = getConfig();
+    if (!config.email) {
+      console.error('Error: KissFeedback requires an \'email\' to be provided.');
       return;
     }
     injectStylesheet();
+    injectModal();
+    injectPill();
+
     var feedbackButtons = getElementsByClassName('kissfeedback');
-    if (!getConfig().disablePill) {
-      var button = getDefaultFeedbackButton();
-      document.body.appendChild(button);
-      feedbackButtons = [].slice.call(feedbackButtons);
-      feedbackButtons.push(button);
-    }
     for (var i = 0; i < feedbackButtons.length; i++) {
-      if (feedbackButtons[i].addEventListener) {
-        feedbackButtons[i].addEventListener('click', openFeedbackForm);
-      } else {
-        feedbackButtons[i].attachEvent('onclick', openFeedbackForm);
-      }
+      setOnClickListener(feedbackButtons[i], openFeedbackForm);
     }
   });
 
+  function injectPill(button) {
+    if (getConfig().disablePill) {
+      return;
+    }
+    button = button || getDefaultFeedbackButton();
+    var canary = document.getElementById('kfCanary');
+    var display = canary.currentStyle
+      ? canary.currentStyle['display']
+      : window.getComputedStyle
+        ? window.getComputedStyle(canary, null).getPropertyValue('display')
+        : null;
+    if (display == 'none') {
+      document.body.appendChild(button);
+      setOnClickListener(button, openFeedbackForm);
+    } else {
+      setTimeout(function() { injectPill(button) }, 250);
+    }
+  }
+
+  function setOnClickListener(element, fn) {
+    if (element.addEventListener) {
+      element.addEventListener('click', fn);
+    } else {
+      element.attachEvent('onclick', fn);
+    }
+  }
+
   function getDefaultFeedbackButton() {
+    var color = getPrimaryColor();
     var button = document.createElement("div");
     button.innerHTML = "Feedback";
     button.id = 'kfPill';
     button.className = "kfButton";
-    button.style.background = getPrimaryColor();
+    button.style.background = color;
 
     var css =
       '.kfButton:hover { background-color:' +
-      shadeColor(getPrimaryColor(), -0.3) +
+      shadeColor(color, -0.3) +
       ' !important; }';
     style = document.createElement('style');
     if (style.styleSheet) {
@@ -44,13 +66,14 @@
 
   /* onClickListener. Open up feedback form for user. */
   function openFeedbackForm(event) {
-    var modal = document.getElementById('kfModal') || configureModal();
+    var modal = document.getElementById('kfModal') || injectModal();
     modal.style.display = "block";
   }
 
-  function configureModal() {
+  function injectModal() {
     var modal = document.createElement("div");
     modal.id = 'kfModal';
+    modal.style.display = 'none';
     document.body.appendChild(modal);
     window.onclick = function(event) {
       if (event.target == modal) {
@@ -93,12 +116,23 @@
     var footer = document.createElement("footer");
     form.appendChild(footer);
 
+    var logo = document.createElement("a");
+    logo.id = 'kfLogo';
+    logo.target = '_blank';
+    logo.href = 'http://www.craigsc.com';
+    logo.innerHTML = 'KISSfeedback';
+    footer.appendChild(logo);
+
     var button = document.createElement("button");
     button.type = "submit";
     button.innerHTML = "Send";
     button.className = 'kfButton';
     button.style.background = getPrimaryColor();
     footer.appendChild(button);
+
+    var canary = document.createElement("div");
+    canary.id = 'kfCanary';
+    modal.appendChild(canary);
 
     return modal;
   }

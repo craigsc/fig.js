@@ -4,6 +4,7 @@
       console.log('KissFeedback has no target email address configured! Could not initialize.');
       return;
     }
+    injectStylesheet();
     var feedbackButtons = getElementsByClassName('kissfeedback');
     if (!getConfig().disablePill) {
       var button = getDefaultFeedbackButton();
@@ -23,19 +24,14 @@
   function getDefaultFeedbackButton() {
     var button = document.createElement("div");
     button.innerHTML = "Feedback";
-    button.setAttribute('style',
-      "background-color:" + getPrimaryColor() + ";" +
-      "bottom:0;right:0;position:absolute;z-index:9999;" +
-      "margin-bottom:10px;margin-left:20px;margin-right:20px;width:114px;height:48px;" +
-      "line-height:48px;text-align:center;vertical-align:middle;" +
-      "font-family:\"Helvetica\",\"Arial\",sans-serif;font-weight:700;" +
-      "-moz-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;" +
-      "color:#fff;cursor:pointer;border-radius:999px;user-select:none;-moz-user-select:none;" +
-      "-khtml-user-select:none;-webkit-user-select:none;-o-user-select:none;");
+    button.id = 'kfPill';
     button.className = "kfButton";
+    button.style.background = getPrimaryColor();
 
-    var hoverColor = shadeColor(getPrimaryColor(), -0.3);
-    var css = '.kfButton:hover {background-color:' + hoverColor + ' !important}';
+    var css =
+      '.kfButton:hover { background-color:' +
+      shadeColor(getPrimaryColor(), -0.3) +
+      ' !important; }';
     style = document.createElement('style');
     if (style.styleSheet) {
       style.styleSheet.cssText = css;
@@ -179,5 +175,17 @@
     var section = document.createElement("section");
     section.setAttribute('style', "margin-bottom:20px;");
     return section;
+  }
+
+  function injectStylesheet() {
+    var id = 'kfStylesheet';
+    if (document.getElementById(id)) {
+      return;
+    }
+    var link = document.createElement('link');
+    link.id = id;
+    link.rel = 'stylesheet';
+    link.href = '../static/kissfeedback.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
   }
 })();

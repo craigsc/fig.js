@@ -76,9 +76,11 @@
     email.type = "email";
     email.placeholder = "Your Email";
     email.className = 'kfField';
+    email.autofocus = true;
     var emailSection = document.createElement("section");
     emailSection.appendChild(email);
     fieldset.appendChild(emailSection);
+    email.focus();
 
     var textarea = document.createElement("textarea");
     textarea.rows = "4";

@@ -6,7 +6,15 @@
        w=o.createElement(d);w.async=1;w.src='../static/kissfeedback.js';
        g=o.getElementsByTagName(d)[0];g.parentNode.insertBefore(w,g)
        })(window,document,'script','kf');
-      kf({'email': 'a@b.com', 'disablePill': false, 'color': '#9932CC'});
+      kf({
+        'email': 'a@b.com',
+        'disablePill': false,
+        'color': '#9932CC',
+        'pillText': 'Feedback',
+        'pillPosition': 'bottomLeft',
+        'formPrompt': 'Have feedback for us?',
+        'pillAnimationSpeed': '0.5s',
+      });
     </script>
   </head>
   <body style="max-width:800px">

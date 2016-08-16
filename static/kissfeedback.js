@@ -28,7 +28,7 @@
         : null;
     if (display == 'none') {
       document.body.appendChild(button);
-      setOnClickListener(button, openFeedbackForm);
+      setOnClickListener(button.children[0], openFeedbackForm);
     } else {
       setTimeout(function() { injectPill(button) }, 250);
     }
@@ -44,11 +44,35 @@
 
   function getDefaultFeedbackButton() {
     var color = getPrimaryColor();
+    var buttonContainer = document.createElement("div");
+    buttonContainer.id = 'kfPillContainer';
+
     var button = document.createElement("div");
-    button.innerHTML = "Feedback";
+    button.innerHTML = getConfig().pillText || "Feedback";
     button.id = 'kfPill';
     button.className = "kfButton";
     button.style.background = color;
+    buttonContainer.appendChild(button);
+
+    var pillPosition = getConfig().pillPosition;
+    var animation = getConfig().pillAnimationSpeed || '0.5s';
+    if (pillPosition == 'topLeft') {
+      buttonContainer.style.top = 0;
+      buttonContainer.style.left = 0;
+      button.style.animation = animation + ' slide-down';
+    } else if (pillPosition == 'topRight') {
+      buttonContainer.style.top = 0;
+      buttonContainer.style.right = 0;
+      button.style.animation = animation + ' slide-down';
+    } else if (pillPosition == 'bottomLeft') {
+      buttonContainer.style.bottom = 0;
+      buttonContainer.style.left = 0;
+      button.style.animation = animation + ' slide-up';
+    } else {
+      buttonContainer.style.bottom = 0;
+      buttonContainer.style.right = 0;
+      button.style.animation = animation + ' slide-up';
+    }
 
     var css =
       '.kfButton:hover { background-color:' +
@@ -61,7 +85,7 @@
       style.appendChild(document.createTextNode(css));
     }
     document.getElementsByTagName('head')[0].appendChild(style);
-    return button;
+    return buttonContainer;
   }
 
   /* onClickListener. Open up feedback form for user. */
@@ -89,7 +113,7 @@
     modalContent.appendChild(form);
 
     var header = document.createElement("header");
-    header.innerHTML = "How can we help?";
+    header.innerHTML = getConfig().formPrompt || "How can we help?";
     form.appendChild(header);
 
     var fieldset = document.createElement("fieldset");

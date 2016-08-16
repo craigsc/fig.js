@@ -1,3 +1,10 @@
+#kfPillContainer {
+  height: 48px;
+  padding: 10px 20px;
+  overflow: hidden;
+  position: absolute;
+}
+
 #kfPill {
   -khtml-user-select: none;
   -moz-font-smoothing: grayscale;
@@ -6,23 +13,38 @@
   -webkit-font-smoothing: antialiased;
   -webkit-user-select: none;
   border-radius: 999px;
-  bottom: 0;
   color: #fff;
   cursor: pointer;
   font-family: Helvetica, Arial, sans-serif;
   font-weight: 700;
-  height:48px;
+  height: 48px;
   line-height: 48px;
-  margin-bottom: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
-  position: absolute;
-  right: 0;
+  padding: 0 20px;
   text-align: center;
+  transform: translateZ(0);
   user-select: none;
   vertical-align: middle;
-  width: 114px; 
   z-index: 9999;
+}
+
+@keyframes slide-up {
+  from {
+    margin-top: 58px;
+  }
+
+  to {
+    margin-top: 0;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    margin-top: -58px;
+  }
+
+  to {
+    margin-top: 0;
+  }
 }
 
 #kfModal {

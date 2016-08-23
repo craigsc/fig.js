@@ -112,6 +112,12 @@
   height: 39px;
 }
 
+#kfModalContent input:disabled,
+#kfModalContent textarea:disabled {
+  background: #EBEBE4;
+  color: rgb(84,84,84);
+}
+
 #kfModalContent textarea {
   height: auto;
   resize: none;

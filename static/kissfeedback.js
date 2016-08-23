@@ -42,6 +42,14 @@
     }
   }
 
+  function setOnSubmitListener(element, fn) {
+    if (element.addEventListener) {
+      element.addEventListener('submit', fn, false);
+    } else {
+      element.attachEvent('onsubmit', fn);
+    }
+  }
+
   function getDefaultFeedbackButton() {
     var color = getPrimaryColor();
     var buttonContainer = document.createElement("div");
@@ -78,6 +86,10 @@
       '.kfButton:hover { background-color:' +
       shadeColor(color, -0.3) +
       ' !important; }';
+    css +=
+      '.kfButton.kfLoading { background-color:' +
+      shadeColor(color, 0.3) +
+      ' !important; }';
     style = document.createElement('style');
     if (style.styleSheet) {
       style.styleSheet.cssText = css;
@@ -99,17 +111,18 @@
     modal.id = 'kfModal';
     modal.style.display = 'none';
     document.body.appendChild(modal);
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
+    setOnClickListener(modal, function(e) {
+      if (e.target == modal) modal.style.display = "none";
+    });
 
     var modalContent = document.createElement("div");
     modalContent.id = "kfModalContent";
     modal.appendChild(modalContent);
 
     var form = document.createElement('form');
+    form.method = "post";
+    form.action = "http://localhost:8888/feedback";
+    setOnSubmitListener(form, function (e) { e.preventDefault(); return false;});
     modalContent.appendChild(form);
 
     var header = document.createElement("header");
@@ -121,9 +134,11 @@
 
     var email = document.createElement("input");
     email.type = "email";
+    email.name = "from_email";
     email.placeholder = "Your Email";
     email.className = 'kfField';
     email.autofocus = true;
+    email.id = "kfEmail";
     var emailSection = document.createElement("section");
     emailSection.appendChild(email);
     fieldset.appendChild(emailSection);
@@ -133,6 +148,8 @@
     textarea.rows = "4";
     textarea.placeholder = "Message";
     textarea.className = 'kfField';
+    textarea.name = "message";
+    textarea.id = "kfTextArea";
     var taSection = document.createElement("section");
     taSection.appendChild(textarea);
     fieldset.appendChild(taSection);
@@ -140,25 +157,79 @@
     var footer = document.createElement("footer");
     form.appendChild(footer);
 
+    var account = document.createElement("input");
+    account.type = "hidden";
+    account.name = "to_email";
+    account.value = getConfig().email;
+    footer.appendChild(account);
+
+    /*
     var logo = document.createElement("a");
     logo.id = 'kfLogo';
     logo.target = '_blank';
     logo.href = 'http://www.craigsc.com';
     logo.innerHTML = 'KISSfeedback';
     footer.appendChild(logo);
+    */
 
     var button = document.createElement("button");
-    button.type = "submit";
+    button.type = "button";
     button.innerHTML = "Send";
     button.className = 'kfButton';
+    button.id = "kfSubmitButton";
     button.style.background = getPrimaryColor();
     footer.appendChild(button);
+    setOnClickListener(
+      button,
+      function(e) {
+        if (validateForm()) {
+          ajaxSubmit(form, onSuccess, onFailure);
+          formIsSending(true);
+        }
+        return false;
+      });
 
     var canary = document.createElement("div");
     canary.id = 'kfCanary';
     modal.appendChild(canary);
 
     return modal;
+  }
+
+  // TODO: form validation
+  function validateForm() {
+    return true;
+  }
+
+  function formIsSending(disable) {
+    var email = document.getElementById("kfEmail");
+    var message = document.getElementById("kfTextArea");
+    var button = document.getElementById("kfSubmitButton");
+    email.disabled = disable;
+    message.disabled = disable;
+    button.disabled = disable;
+    button.innerHTML = disable ? 'Sending...' : 'Send';
+    if (disable) {
+      button.className += " kfLoading";
+    } else {
+      button.className = "kfButton";
+    }
+  }
+
+  function onSuccess(xhr) {
+    if (xhr.currentTarget.responseText != "1") {
+      onFailure(xhr);
+      return;
+    }
+    console.log(xhr, 'Success!');
+    var button = document.getElementById('kfSubmitButton');
+    button.innerHTML = "Sent!";
+  }
+
+  function onFailure(xhr) {
+    formIsSending(false);
+    // TODO: Add unexpected failure message
+    console.log(xhr, 'Failure!');
   }
 
   /* $.ready x-browser substitute. see http://stackoverflow.com/a/30319853 */
@@ -215,5 +286,24 @@
     link.rel = 'stylesheet';
     link.href = '../static/kissfeedback.css';
     document.getElementsByTagName('head')[0].appendChild(link);
+  }
+
+  /* See http://stackoverflow.com/a/34296482 */
+  function ajaxSubmit(form, success_callback, failure_callback) {
+    var xhr = new XMLHttpRequest();
+    var params = [].filter.call(form.elements, function (el) {
+        return !(el.type in ['checkbox', 'radio']) || el.checked;
+        })
+      .filter(function(el) { return !!el.name; }) //Nameless elements die.
+      .filter(function(el) { return !el.disabled; }) //Disabled elements die.
+      .map(function(el) {
+        return encodeURIComponent(el.name) + '=' + encodeURIComponent(el.value);
+        })
+      .join('&'); //Then join all the strings by &
+    xhr.open("POST", form.action);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onload = success_callback.bind(xhr);
+    xhr.onerror = failure_callback && failure_callback.bind(xhr);
+    xhr.send(params);
   }
 })();

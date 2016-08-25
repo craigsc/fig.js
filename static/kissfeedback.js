@@ -35,18 +35,22 @@
   }
 
   function setOnClickListener(element, fn) {
-    if (element.addEventListener) {
-      element.addEventListener('click', fn);
-    } else {
-      element.attachEvent('onclick', fn);
-    }
+    _attachListener(['click', 'onclick'], element, fn);
   }
 
   function setOnSubmitListener(element, fn) {
+    _attachListener(['submit', 'onsubmit'], element, fn);
+  }
+
+  function setOnBlurListener(element, fn) {
+    _attachListener(['blur', 'onblur'], element, fn);
+  }
+
+  function _attachListener(events, element, fn) {
     if (element.addEventListener) {
-      element.addEventListener('submit', fn, false);
+      element.addEventListener(events[0], fn);
     } else {
-      element.attachEvent('onsubmit', fn);
+      element.attachEvent(events[1], fn);
     }
   }
 
@@ -122,12 +126,21 @@
     var form = document.createElement('form');
     form.method = "post";
     form.action = "http://localhost:8888/feedback";
-    setOnSubmitListener(form, function (e) { e.preventDefault(); return false;});
     modalContent.appendChild(form);
 
     var header = document.createElement("header");
     header.innerHTML = getConfig().formPrompt || "How can we help?";
     form.appendChild(header);
+    setOnSubmitListener(
+      form,
+      function(e) {
+        e.preventDefault();
+        if (validateForm()) {
+          ajaxSubmit(form, onSuccess, onFailure);
+          formIsSending(true);
+        }
+        return false;
+      });
 
     var fieldset = document.createElement("fieldset");
     form.appendChild(fieldset);
@@ -139,10 +152,16 @@
     email.className = 'kfField';
     email.autofocus = true;
     email.id = "kfEmail";
+    email.required = true;
     var emailSection = document.createElement("section");
     emailSection.appendChild(email);
     fieldset.appendChild(emailSection);
     email.focus();
+    setOnBlurListener(email, validateEmail);
+    var email_check = document.createElement("div");
+    email_check.className = "kfRequirements";
+    email_check.innerHTML = "Must be a valid email address.";
+    emailSection.appendChild(email_check);
 
     var textarea = document.createElement("textarea");
     textarea.rows = "4";
@@ -150,9 +169,15 @@
     textarea.className = 'kfField';
     textarea.name = "message";
     textarea.id = "kfTextArea";
+    textarea.required = true;
     var taSection = document.createElement("section");
     taSection.appendChild(textarea);
     fieldset.appendChild(taSection);
+    setOnBlurListener(textarea, validateMessage);
+    var text_check = document.createElement("div");
+    text_check.className = "kfRequirements";
+    text_check.innerHTML = "Must not be empty.";
+    taSection.appendChild(text_check);
 
     var footer = document.createElement("footer");
     form.appendChild(footer);
@@ -173,21 +198,12 @@
     */
 
     var button = document.createElement("button");
-    button.type = "button";
+    button.type = "submit";
     button.innerHTML = "Send";
     button.className = 'kfButton';
     button.id = "kfSubmitButton";
     button.style.background = getPrimaryColor();
     footer.appendChild(button);
-    setOnClickListener(
-      button,
-      function(e) {
-        if (validateForm()) {
-          ajaxSubmit(form, onSuccess, onFailure);
-          formIsSending(true);
-        }
-        return false;
-      });
 
     var canary = document.createElement("div");
     canary.id = 'kfCanary';
@@ -196,8 +212,28 @@
     return modal;
   }
 
-  // TODO: form validation
   function validateForm() {
+    return validateEmail() && validateMessage();
+  }
+
+  function validateEmail() {
+    var email = document.getElementById("kfEmail");
+    var re = /\S+@\S+\.\S+/;
+    if (!re.test(email.value)) {
+      email.className += " kfInvalid";
+      return false;
+    }
+    email.className = "kfField";
+    return true;
+  }
+
+  function validateMessage() {
+    var message = document.getElementById("kfTextArea");
+    if (message.value.trim() == '') {
+      message.className += " kfInvalid"
+      return false;
+    }
+    message.className = "kfField";
     return true;
   }
 
@@ -221,9 +257,9 @@
       onFailure(xhr);
       return;
     }
-    console.log(xhr, 'Success!');
     var button = document.getElementById('kfSubmitButton');
     button.innerHTML = "Sent!";
+    button.className += " kfDone";
   }
 
   function onFailure(xhr) {
@@ -305,5 +341,9 @@
     xhr.onload = success_callback.bind(xhr);
     xhr.onerror = failure_callback && failure_callback.bind(xhr);
     xhr.send(params);
+  }
+
+  String.prototype.trim = function() {
+    return this.replace(/^\s+|\s+$/g,"");
   }
 })();

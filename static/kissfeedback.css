@@ -118,6 +118,14 @@
   color: rgb(84,84,84);
 }
 
+#kfModalContent .kfLoading:disabled {
+  cursor: wait; 
+}
+
+#kfModalContent .kfLoading.kfDone:disabled {
+  cursor: not-allowed; 
+}
+
 #kfModalContent textarea {
   height: auto;
   resize: none;
@@ -160,4 +168,17 @@
 
 #kfCanary {
   display: none;
+}
+
+.kfRequirements {
+  color: red;
+  font-style: italic;
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 10px;
+  transition: 0.28s;
+}
+
+.kfInvalid + .kfRequirements {
+  max-height: 100px;
 }

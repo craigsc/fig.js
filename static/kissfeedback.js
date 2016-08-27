@@ -91,6 +91,10 @@
       shadeColor(color, -0.3) +
       ' !important; }';
     css +=
+      '.kfButton:active { background-color:' +
+      shadeColor(color, -0.4) +
+      ' !important; }';
+    css +=
       '.kfButton.kfLoading { background-color:' +
       shadeColor(color, 0.3) +
       ' !important; }';
@@ -126,11 +130,8 @@
     var form = document.createElement('form');
     form.method = "post";
     form.action = "http://localhost:8888/feedback";
+    form.id = "kfForm";
     modalContent.appendChild(form);
-
-    var header = document.createElement("header");
-    header.innerHTML = getConfig().formPrompt || "How can we help?";
-    form.appendChild(header);
     setOnSubmitListener(
       form,
       function(e) {
@@ -141,6 +142,10 @@
         }
         return false;
       });
+
+    var header = document.createElement("header");
+    header.innerHTML = getConfig().formPrompt || "How can we help?";
+    form.appendChild(header);
 
     var fieldset = document.createElement("fieldset");
     form.appendChild(fieldset);
@@ -204,6 +209,7 @@
     button.id = "kfSubmitButton";
     button.style.background = getPrimaryColor();
     footer.appendChild(button);
+    setOnClickListener(button, function(e) { validateForm() });
 
     var canary = document.createElement("div");
     canary.id = 'kfCanary';
@@ -212,8 +218,15 @@
     return modal;
   }
 
+  function resetForm() {
+    var modal = document.getElementById('kfModal');
+    modal.className = "kfSuccess";
+    setTimeout(function() { modal.parentNode.removeChild(modal) }, 500);
+  }
+
   function validateForm() {
-    return validateEmail() && validateMessage();
+    var valid = validateEmail();
+    return validateMessage() && valid;
   }
 
   function validateEmail() {
@@ -260,6 +273,7 @@
     var button = document.getElementById('kfSubmitButton');
     button.innerHTML = "Sent!";
     button.className += " kfDone";
+    setTimeout(resetForm, 500);
   }
 
   function onFailure(xhr) {

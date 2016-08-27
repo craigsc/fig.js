@@ -48,15 +48,24 @@
 }
 
 #kfModal {
+  -moz-transition: opacity .5s ease-in;
+  -ms-transition: opacity .5s ease-in;
+  -o-transition: opacity .5s ease-in;
+  -webkit-transition: opacity .5s ease-in;
   background-color: rgba(0, 0, 0, 0.4);
   display: none;
   height: 100%;
   left: 0;
+  opacity: 1;
   overflow: auto; 
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 99999;
+}
+
+#kfModal.kfSuccess {
+  opacity: 0;
 }
 
 #kfModalContent {

@@ -193,14 +193,10 @@
     account.value = getConfig().email;
     footer.appendChild(account);
 
-    /*
-    var logo = document.createElement("a");
-    logo.id = 'kfLogo';
-    logo.target = '_blank';
-    logo.href = 'http://www.craigsc.com';
-    logo.innerHTML = 'KISSfeedback';
-    footer.appendChild(logo);
-    */
+    var error = document.createElement("div");
+    error.id = 'kfError';
+    error.innerHTML = 'Unexpected error occurred. Please try again later.';
+    footer.appendChild(error);
 
     var button = document.createElement("button");
     button.type = "submit";
@@ -225,6 +221,7 @@
   }
 
   function validateForm() {
+    document.getElementById("kfError").className = "";
     var valid = validateEmail();
     return validateMessage() && valid;
   }
@@ -278,8 +275,7 @@
 
   function onFailure(xhr) {
     formIsSending(false);
-    // TODO: Add unexpected failure message
-    console.log(xhr, 'Failure!');
+    document.getElementById('kfError').className = "kfShow";
   }
 
   /* $.ready x-browser substitute. see http://stackoverflow.com/a/30319853 */

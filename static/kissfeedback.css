@@ -155,7 +155,7 @@
   float: right;
   font: 500 15px/39px Helvetica, Arial, sans-serif;
   height: 39px;
-  margin: 10px 0 0 20px;
+  margin: 10px 0 0 0;
   outline: none;
   overflow: hidden;
   padding: 0 25px;
@@ -179,7 +179,8 @@
   display: none;
 }
 
-.kfRequirements {
+.kfRequirements,
+#kfError {
   color: red;
   font-style: italic;
   max-height: 0;
@@ -188,6 +189,13 @@
   transition: 0.28s;
 }
 
-.kfInvalid + .kfRequirements {
+#kfError {
+  float: left;
+  margin: 10px 0 0 0;
+  width: 50%;
+}
+
+.kfInvalid + .kfRequirements,
+#kfError.kfShow {
   max-height: 100px;
 }

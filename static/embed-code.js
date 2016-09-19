@@ -13,10 +13,10 @@
     };
     newScript = documentVar.createElement(scriptVar);
     newScript.async = 1;
-    newScript.src = 'kissfeedback-0.1.js';
+    newScript.src = 'fig-0.1.js';
     tmp = documentVar.getElementsByTagName()[0];
     tmp.parentNode.insertBefore(newScript, tmp);
-  })(window, document, 'script', 'kissfeedback');
+  })(window, document, 'script', 'fig');
 
   /* persist list of target emails via newly created function */
   kissfeedback('a@b.com', 'c@d.com');

@@ -1,6 +1,6 @@
 [Active Development: NOT YET FUNCTIONAL]
 
-KISSFeedback is a simple js plugin that allows any project to easily and quickly integrate a simple mechanism to solicit and collect feedback from users.
+Fig is a simple js plugin that allows any project to easily and quickly integrate a simple mechanism to solicit and collect feedback from users.
 No accounts or registration required. Just configure the plugin via he below script and collected feedback will flow directly to an email inbox of
 your choosing. Incredibly lightweight, simple, and powerful.
 

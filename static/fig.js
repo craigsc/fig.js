@@ -9,7 +9,7 @@
     injectModal();
     injectPill();
 
-    var feedbackButtons = getElementsByClassName('kissfeedback');
+    var feedbackButtons = getElementsByClassName('fig');
     for (var i = 0; i < feedbackButtons.length; i++) {
       setOnClickListener(feedbackButtons[i], openFeedbackForm);
     }
@@ -314,7 +314,7 @@
   }
 
   function getConfig() {
-    var args = window['kf'].e || [];
+    var args = window['fig'].e || [];
     return args.length > 0 ? args[0][0] : {};
   }
 
@@ -330,7 +330,7 @@
     var link = document.createElement('link');
     link.id = id;
     link.rel = 'stylesheet';
-    link.href = '../static/kissfeedback.css';
+    link.href = '../static/fig.css';
     document.getElementsByTagName('head')[0].appendChild(link);
   }
 

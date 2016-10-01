@@ -330,7 +330,7 @@
     var link = document.createElement('link');
     link.id = id;
     link.rel = 'stylesheet';
-    link.href = '../static/fig.css';
+    link.href = '/static/lib/fig.css';
     document.getElementsByTagName('head')[0].appendChild(link);
   }
 

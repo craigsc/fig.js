@@ -2,6 +2,7 @@
   height: 48px;
   margin: 10px 20px;
   position: fixed;
+  z-index: 9999;
 }
 
 #kfPill {
@@ -23,7 +24,6 @@
   transform: translateZ(0);
   user-select: none;
   vertical-align: middle;
-  z-index: 9999;
 }
 
 @keyframes slide-up {
@@ -61,6 +61,12 @@
   top: 0;
   width: 100%;
   z-index: 99999;
+}
+
+#kfModal * {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 #kfModal.kfSuccess {

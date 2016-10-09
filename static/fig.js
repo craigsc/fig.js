@@ -118,6 +118,7 @@
   function openFeedbackForm(event) {
     var modal = document.getElementById('kfModal') || injectModal();
     modal.style.display = "block";
+    document.getElementById("kfEmail").focus();
   }
 
   function injectModal() {

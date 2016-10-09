@@ -35,22 +35,28 @@
   }
 
   function setOnClickListener(element, fn) {
-    _attachListener(['click', 'onclick'], element, fn);
+    _attachListener('click', element, fn);
   }
 
   function setOnSubmitListener(element, fn) {
-    _attachListener(['submit', 'onsubmit'], element, fn);
+    _attachListener('submit', element, fn);
   }
 
   function setOnBlurListener(element, fn) {
-    _attachListener(['blur', 'onblur'], element, fn);
+    _attachListener('blur', element, fn);
   }
 
-  function _attachListener(events, element, fn) {
+  function setOnKeyupListener(element, fn) {
+    _attachListener('keyup', element, function(e) { fn(e || window.event) });
+  }
+
+  function _attachListener(event, element, fn) {
     if (element.addEventListener) {
-      element.addEventListener(events[0], fn);
+      element.addEventListener(event, fn);
+    } else if (element.attachEvent) {
+      element.attachEvent("on" + event, fn);
     } else {
-      element.attachEvent(events[1], fn);
+      element["on" + event] = fn;
     }
   }
 
@@ -157,7 +163,6 @@
     email.className = 'kfField';
     email.autofocus = true;
     email.id = "kfEmail";
-    email.required = true;
     var emailSection = document.createElement("section");
     emailSection.appendChild(email);
     fieldset.appendChild(emailSection);
@@ -174,11 +179,10 @@
     textarea.className = 'kfField';
     textarea.name = "message";
     textarea.id = "kfTextArea";
-    textarea.required = true;
     var taSection = document.createElement("section");
     taSection.appendChild(textarea);
+    setOnKeyupListener(textarea, clearMessageErrorIfValid);
     fieldset.appendChild(taSection);
-    setOnBlurListener(textarea, validateMessage);
     var text_check = document.createElement("div");
     text_check.className = "kfRequirements";
     text_check.innerHTML = "Must not be empty.";
@@ -226,10 +230,14 @@
     return validateMessage() && valid;
   }
 
-  function validateEmail() {
+  function validateEmail(blur = false) {
     var email = document.getElementById("kfEmail");
     var re = /\S+@\S+\.\S+/;
-    if (!re.test(email.value)) {
+    var value = email.value && email.value.trim();
+    if (value) {
+      email.value = value;
+    }
+    if ((value || !blur) && !re.test(email.value)) {
       email.className += " kfInvalid";
       return false;
     }
@@ -245,6 +253,13 @@
     }
     message.className = "kfField";
     return true;
+  }
+
+  function clearMessageErrorIfValid() {
+    var message = document.getElementById("kfTextArea");
+    if (message.className.includes("kfInvalid")) {
+      validateMessage();
+    }
   }
 
   function formIsSending(disable) {
@@ -330,7 +345,7 @@
     var link = document.createElement('link');
     link.id = id;
     link.rel = 'stylesheet';
-    link.href = '/static/lib/fig.css';
+    link.href = 'http://localhost:8888/static/lib/fig.css';
     document.getElementsByTagName('head')[0].appendChild(link);
   }
 

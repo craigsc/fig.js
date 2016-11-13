@@ -1,4 +1,6 @@
 (function() {
+  maybeConfigure();
+
   onReady(function() {
     var config = getConfig();
     if (!config.email) {
@@ -8,17 +10,16 @@
     injectStylesheet();
     injectModal();
     injectPill();
-
-    var feedbackButtons = getElementsByClassName('fig');
-    for (var i = 0; i < feedbackButtons.length; i++) {
-      setOnClickListener(feedbackButtons[i], openFeedbackForm);
-    }
   });
 
-  function injectPill(button) {
-    if (getConfig().disablePill) {
+  function maybeConfigure() {
+    if (isConfigured()) {
       return;
     }
+    window['fig'] = function() {(window['fig'].e = window['fig'].e || []).push(arguments)};
+  }
+
+  function injectPill(button) {
     button = button || getDefaultFeedbackButton();
     var canary = document.getElementById('kfCanary');
     var display = canary.currentStyle
@@ -66,14 +67,14 @@
     buttonContainer.id = 'kfPillContainer';
 
     var button = document.createElement("div");
-    button.innerHTML = getConfig().pillText || "Feedback";
+    button.innerHTML = getConfig().text || "Feedback";
     button.id = 'kfPill';
     button.className = "kfButton";
     button.style.background = color;
     buttonContainer.appendChild(button);
 
-    var pillPosition = getConfig().pillPosition;
-    var animation = getConfig().pillAnimationSpeed || '0.5s';
+    var pillPosition = getConfig().position;
+    var animation = getConfig().animationSpeed || '0.5s';
     if (pillPosition == 'topLeft') {
       buttonContainer.style.top = 0;
       buttonContainer.style.left = 0;
@@ -151,7 +152,7 @@
       });
 
     var header = document.createElement("header");
-    header.innerHTML = getConfig().formPrompt || "How can we help?";
+    header.innerHTML = getConfig().prompt || "How can we help?";
     form.appendChild(header);
 
     var fieldset = document.createElement("fieldset");
@@ -296,7 +297,7 @@
 
   /* $.ready x-browser substitute. see http://stackoverflow.com/a/30319853 */
   function onReady(callback) {
-    /in/.test(document.readyState)
+    (!isConfigured() || /in/.test(document.readyState))
       ? setTimeout(function() { onReady(callback); }, 250)
       : callback();
   }
@@ -329,8 +330,12 @@
     return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
   }
 
+  function isConfigured() {
+    return window['fig'] !== undefined;
+  }
+
   function getConfig() {
-    var args = window['fig'].e || [];
+    var args = (window['fig'] && window['fig'].e) || [];
     return args.length > 0 ? args[0][0] : {};
   }
 

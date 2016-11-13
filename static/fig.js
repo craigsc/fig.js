@@ -1,7 +1,24 @@
 (function() {
-  maybeConfigure();
+  configure();
+  onReady(function() { init() });
 
-  onReady(function() {
+  function configure() {
+    window['fig'] = window['fig'] || function() {(window['fig'].e = window['fig'].e || []).push(arguments)};
+    window['fig'].reset = function(injectedConfig) {
+      var config = getConfig();
+      for (var attrname in injectedConfig) {
+        config[attrname] = injectedConfig[attrname];
+      }
+      fig(config);
+      var pill = document.getElementById('kfPillContainer');
+      pill.parentNode.removeChild(pill);
+      var modal = document.getElementById('kfModal');
+      modal.parentNode.removeChild(modal);
+      init();
+    };
+  }
+
+  function init() {
     var config = getConfig();
     if (!config.email) {
       console.error('Error: KissFeedback requires an \'email\' to be provided.');
@@ -10,13 +27,6 @@
     injectStylesheet();
     injectModal();
     injectPill();
-  });
-
-  function maybeConfigure() {
-    if (isConfigured()) {
-      return;
-    }
-    window['fig'] = function() {(window['fig'].e = window['fig'].e || []).push(arguments)};
   }
 
   function injectPill(button) {

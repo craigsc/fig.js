@@ -11,9 +11,13 @@
       }
       fig(config);
       var pill = document.getElementById('kfPillContainer');
-      pill.parentNode.removeChild(pill);
+      if (pill) {
+        pill.parentNode.removeChild(pill);
+      }
       var modal = document.getElementById('kfModal');
-      modal.parentNode.removeChild(modal);
+      if (modal) {
+        modal.parentNode.removeChild(modal);
+      }
       init();
     };
   }

@@ -10,7 +10,8 @@ For more information, visit <https://usefig.com>.
 
 For the most up-to-date instructions, please visit the [Fig Quick Start][].
 
-Simply upload the resources under the 'static' folder (cdn coming soon!) and then paste the following into the head of your website:
+First, [download][] fig.js and ensure it is in a location accessible from your web application. Then, simply include the following
+code snippet in the &lt;head&gt; of your webpage:
 
 ```javascript
 <script>
@@ -32,5 +33,6 @@ Please read the official [Fig Documentation][] for advanced usage. This enables 
 
 Released under the [MIT license](LICENSE.md).
 
+[download]: https://usefig.com/download
 [Fig Quick Start]: https://usefig.com/quickstart
 [Fig Documentation]: https://usefig.com/documentation

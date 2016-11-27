@@ -12,6 +12,7 @@ For the most up-to-date instructions, please visit the [Fig Quick Start][].
 
 Simply upload the resources under the 'static' folder (cdn coming soon!) and then paste the following into the head of your website:
 
+```javascript
 <script>
   (function(y,o,d,a,w,g){y[a]=y[a]||function(){(y[a].e=y[a].e||[]).push(arguments)};
    w=o.createElement(d);w.async=1;w.src='path/to/fig.js';
@@ -19,12 +20,13 @@ Simply upload the resources under the 'static' folder (cdn coming soon!) and the
    })(window,document,'script','fig');
   fig({'email': 'your@email.here'});
 </script>
+```
 
 Don't forget to edit 'your@email.here' to point to the email address for your team (this is where the feedback is delivered to). 
 
 ## Documentation / Advanced Usage
 
-Please read the official [Fig Documentation][] for advanced usage. This enables the use of custom colors, positioning, text copy, etc.
+Please read the official [Fig Documentation][] for advanced usage. This enables the optional use of custom colors, positioning, text copy, etc.
 
 ## License
 

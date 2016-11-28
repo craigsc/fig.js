@@ -23,7 +23,7 @@ code snippet in the &lt;head&gt; of your webpage:
 </script>
 ```
 
-Don't forget to edit 'your@email.here' to point to the email address for your team (this is where the feedback is delivered to). 
+Don't forget to edit 'path/to/fig.js' and 'your@email.here' with the appropriate values. 
 
 ## Documentation / Advanced Usage
 

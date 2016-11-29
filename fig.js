@@ -151,7 +151,7 @@
 
     var form = document.createElement('form');
     form.method = "post";
-    form.action = "http://localhost:8888/feedback";
+    form.action = "https://usefig.com/feedback";
     form.id = "kfForm";
     modalContent.appendChild(form);
     setOnSubmitListener(
@@ -221,7 +221,7 @@
     footer.appendChild(logo);
 
     var logoImg = document.createElement("img");
-    logoImg.src = "http://localhost:8888/static/img/fig.png";
+    logoImg.src = "https://usefig.com/static/img/fig.png";
     logoImg.width = "25";
     logoImg.alt = "Fig logo";
     logo.appendChild(logoImg);
@@ -377,7 +377,7 @@
 
   function injectStylesheets() {
     injectStyle('kfTextStyle', "https://fonts.googleapis.com/css?family=Pacifico");
-    injectStyle('kfFigStyle', 'http://localhost:8888/static/lib/fig.css');
+    injectStyle('kfFigStyle', 'https://usefig.com/static/lib/fig.css');
   }
 
   function injectStyle(id, href) {

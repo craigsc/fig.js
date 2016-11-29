@@ -1,4 +1,4 @@
-# Fig.js
+# <img src="http://usefig.com/static/img/fig.png" width="23" style="vertical-align:bottom"> Fig.js
 
 Fig.js is a simple plugin that allows any web application to easily and quickly integrate a mechanism to solicit and collect feedback from users.
 No accounts or registration required. Just include fig.js in your webapp and collected feedback will flow directly to an email inbox of

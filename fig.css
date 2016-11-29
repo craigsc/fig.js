@@ -151,6 +151,7 @@
   display: block;
   overflow:hidden;
   padding: 15px 30px 25px;
+  position: relative;
 }
 
 #kfModalContent footer button {
@@ -167,21 +168,12 @@
   text-decoration: none;
 }
 
-#kfLogo {
-  color: #ddd;
-  float: left;
-  font: 500 12px Helvetica, Arial, sans-serif;
-  letter-spacing: .02em;
-  margin: 35px 0 0 4px;
-  text-decoration: none;
-}
-
-#kfLogo:hover {
-  color: #999;
-}
-
 #kfCanary {
   display: none;
+}
+
+.kfRequirements {
+  padding: 0 10px;
 }
 
 .kfRequirements,
@@ -190,17 +182,31 @@
   font-style: italic;
   max-height: 0;
   overflow: hidden;
-  padding: 0 10px;
   transition: 0.28s;
-}
-
-#kfError {
-  float: left;
-  margin: 10px 0 0 0;
-  width: 50%;
 }
 
 .kfInvalid + .kfRequirements,
 #kfError.kfShow {
   max-height: 100px;
+}
+
+#kfLogo {
+  float: left;
+  position: absolute;
+  bottom: 25px;
+  font-family: 'Pacifico', cursive;
+  color: #777;
+  text-decoration: none;
+}
+
+#kfLogo .kfLogoText {
+  display: inline-block;
+  margin-left: 3px;
+  font-size: 15px;
+  float: right; 
+  margin-top: 1px;
+}
+
+#kfLogo:hover {
+  color: #5e5e5e;
 }

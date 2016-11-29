@@ -28,7 +28,7 @@
       console.error('Error: KissFeedback requires an \'email\' to be provided.');
       return;
     }
-    injectStylesheet();
+    injectStylesheets();
     injectModal();
     injectPill();
   }
@@ -205,6 +205,7 @@
     taSection.appendChild(text_check);
 
     var footer = document.createElement("footer");
+    footer.className = "kfFooter";
     form.appendChild(footer);
 
     var account = document.createElement("input");
@@ -212,6 +213,22 @@
     account.name = "to_email";
     account.value = getConfig().email;
     footer.appendChild(account);
+
+    var logo = document.createElement("a");
+    logo.id = "kfLogo";
+    logo.href = "https://www.usefig.com";
+    footer.appendChild(logo);
+
+    var logoImg = document.createElement("img");
+    logoImg.src = "http://localhost:8888/static/img/fig.png";
+    logoImg.width = "25";
+    logoImg.alt = "Fig logo";
+    logo.appendChild(logoImg);
+
+    var logoText = document.createElement("div");
+    logoText.className = "kfLogoText";
+    logoText.innerHTML = "Fig";
+    logo.appendChild(logoText);
 
     var error = document.createElement("div");
     error.id = 'kfError';
@@ -357,15 +374,19 @@
     return getConfig().color || '#0064cd';
   }
 
-  function injectStylesheet() {
-    var id = 'kfStylesheet';
+  function injectStylesheets() {
+    injectStyle('kfTextStyle', "https://fonts.googleapis.com/css?family=Pacifico");
+    injectStyle('kfFigStyle', 'http://localhost:8888/static/lib/fig.css');
+  }
+
+  function injectStyle(id, href) {
     if (document.getElementById(id)) {
       return;
     }
     var link = document.createElement('link');
     link.id = id;
     link.rel = 'stylesheet';
-    link.href = 'http://localhost:8888/static/lib/fig.css';
+    link.href = href;
     document.getElementsByTagName('head')[0].appendChild(link);
   }
 

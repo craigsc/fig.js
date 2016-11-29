@@ -217,6 +217,7 @@
     var logo = document.createElement("a");
     logo.id = "kfLogo";
     logo.href = "https://www.usefig.com";
+    logo.target = "_blank";
     footer.appendChild(logo);
 
     var logoImg = document.createElement("img");

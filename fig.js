@@ -1,3 +1,7 @@
+/* Globals */
+var kfRemoteDomain = 'http://localhost:8888';
+
+/* onReady */
 (function() {
   configure();
   onReady(function() { init() });
@@ -151,7 +155,7 @@
 
     var form = document.createElement('form');
     form.method = "post";
-    form.action = "https://usefig.com/feedback";
+    form.action = kfRemoteDomain + "/feedback";
     form.id = "kfForm";
     modalContent.appendChild(form);
     setOnSubmitListener(
@@ -216,12 +220,12 @@
 
     var logo = document.createElement("a");
     logo.id = "kfLogo";
-    logo.href = "https://www.usefig.com";
+    logo.href = kfRemoteDomain;
     logo.target = "_blank";
     footer.appendChild(logo);
 
     var logoImg = document.createElement("img");
-    logoImg.src = "https://usefig.com/static/img/fig.png";
+    logoImg.src = kfRemoteDomain + "/static/img/fig.png";
     logoImg.width = "25";
     logoImg.alt = "Fig logo";
     logo.appendChild(logoImg);
@@ -377,7 +381,7 @@
 
   function injectStylesheets() {
     injectStyle('kfTextStyle', "https://fonts.googleapis.com/css?family=Pacifico");
-    injectStyle('kfFigStyle', 'https://usefig.com/static/lib/fig.css');
+    injectStyle('kfFigStyle', kfRemoteDomain + '/static/lib/fig.css');
   }
 
   function injectStyle(id, href) {

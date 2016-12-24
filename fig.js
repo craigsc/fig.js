@@ -1,5 +1,5 @@
 /* Globals */
-var kfRemoteDomain = 'http://localhost:8888';
+var kfRemoteDomain = 'https://www.usefig.com';
 
 /* onReady */
 (function() {

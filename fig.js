@@ -1,5 +1,5 @@
 /* Globals */
-var _kfDebug = true;
+var _kfDebug = false;
 var kfRemoteDomain = _kfDebug ? 'http://localhost:8888' : 'https://www.usefig.com';
 
 /* onReady */

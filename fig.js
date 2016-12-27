@@ -269,7 +269,7 @@ var kfRemoteDomain = _kfDebug ? 'http://localhost:8888' : 'https://www.usefig.co
     return validateMessage() && valid;
   }
 
-  function validateEmail(blur = false) {
+  function validateEmail(blur) {
     var email = document.getElementById("kfEmail");
     var re = /\S+@\S+\.\S+/;
     var value = email.value && email.value.trim();

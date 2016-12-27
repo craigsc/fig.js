@@ -1,5 +1,6 @@
 /* Globals */
-var kfRemoteDomain = 'https://www.usefig.com';
+var _kfDebug = true;
+var kfRemoteDomain = _kfDebug ? 'http://localhost:8888' : 'https://www.usefig.com';
 
 /* onReady */
 (function() {
@@ -225,7 +226,7 @@ var kfRemoteDomain = 'https://www.usefig.com';
     footer.appendChild(logo);
 
     var logoImg = document.createElement("img");
-    logoImg.src = kfRemoteDomain + "/static/img/fig.png";
+    logoImg.src = kfRemoteDomain + "/static/plugin/logo.png";
     logoImg.width = "25";
     logoImg.alt = "Fig logo";
     logo.appendChild(logoImg);
@@ -381,7 +382,7 @@ var kfRemoteDomain = 'https://www.usefig.com';
 
   function injectStylesheets() {
     injectStyle('kfTextStyle', "https://fonts.googleapis.com/css?family=Pacifico");
-    injectStyle('kfFigStyle', kfRemoteDomain + '/static/lib/fig.css');
+    injectStyle('kfFigStyle', kfRemoteDomain + '/static/plugin/fig.css');
   }
 
   function injectStyle(id, href) {

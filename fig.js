@@ -382,7 +382,7 @@ var kfRemoteDomain = _kfDebug ? 'http://localhost:8888' : 'https://www.usefig.co
 
   function injectStylesheets() {
     injectStyle('kfTextStyle', "https://fonts.googleapis.com/css?family=Pacifico");
-    injectStyle('kfFigStyle', kfRemoteDomain + '/static/plugin/fig.css');
+    injectStyle('kfFigStyle', kfRemoteDomain + '/static/plugin/fig.min.css');
   }
 
   function injectStyle(id, href) {
